@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥬</text></svg>" />
+    <title>Let's Go Shopping</title>
+    <!-- 首次打开缓冲页（用户 2026-11-18 要求）：纯静态内联，JS 包到达前
+         就先上屏，避免白屏；App 首帧画完后由 src/splash.ts 淡出移除，
+         另有 6 秒内联兜底，永远不会把页面困在加载页后面。 -->
+    <style>
+      #app-splash {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; align-items: center; justify-content: center;
+        background: #fff6ec;
+        font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        transition: opacity 0.32s ease;
+      }
+      #app-splash.splash--out { opacity: 0; pointer-events: none; }
+      #app-splash .splash-card { text-align: center; padding: 24px; }
+      #app-splash .splash-coin {
+        font-size: 64px; line-height: 1; display: inline-block;
+        animation: splash-bounce 0.9s ease-in-out infinite alternate;
+      }
+      #app-splash .splash-title {
+        margin-top: 14px; font-size: 34px; font-weight: 800; color: #1e1e2a;
+        letter-spacing: 0.04em;
+      }
+      #app-splash .splash-title-en {
+        margin-top: 2px; font-size: 17px; font-weight: 700; color: #ff6b2c;
+        letter-spacing: 0.06em;
+      }
+      #app-splash .splash-bar {
+        margin: 22px auto 10px; width: 176px; height: 12px; border-radius: 6px;
+        background: #ffe3c2; overflow: hidden;
+      }
+      #app-splash .splash-bar-fill {
+        display: block; width: 40%; height: 100%; border-radius: 6px;
+        background: #ff6b2c;
+        animation: splash-slide 1.1s ease-in-out infinite alternate;
+      }
+      #app-splash .splash-note { font-size: 14px; font-weight: 600; color: #8a7a63; }
+      @keyframes splash-bounce {
+        from { transform: translateY(0); }
+        to { transform: translateY(-14px); }
+      }
+      @keyframes splash-slide {
+        from { transform: translateX(-30%); }
+        to { transform: translateX(190%); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #app-splash .splash-coin, #app-splash .splash-bar-fill { animation: none; }
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-CqbZO9oM.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-pxTHkjGP.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="app-splash" role="status" aria-label="Loading">
+      <div class="splash-card">
+        <span class="splash-coin" aria-hidden="true">🪙</span>
+        <div class="splash-title">一起去买菜</div>
+        <div class="splash-title-en">Let's Go Shopping</div>
+        <div class="splash-bar"><span class="splash-bar-fill"></span></div>
+        <div class="splash-note">Loading… 加载中…</div>
+      </div>
+    </div>
+    <script>
+      setTimeout(function () {
+        var s = document.getElementById('app-splash');
+        if (s) {
+          s.classList.add('splash--out');
+          setTimeout(function () { s.remove(); }, 350);
+        }
+      }, 6000);
+    </script>
+  </body>
+</html>
